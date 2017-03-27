@@ -55,7 +55,7 @@ public class OntologyService {
 	            +" <http://www.owl-ontologies.com/OntologyIU-lite.owl#Profile_"+user.getFirstName()+"> a  OntologyInterest:Profile;"
 	            + "   OntologyInterest:lastName    \""+user.getLastName()+"\" ;"
 	            + "   OntologyInterest:firstName    \""+user.getFirstName()+"\" ;"
-	            + "   OntologyInterest:birthay    \""+user.getBirthday()+"\" ;"
+	            + "   OntologyInterest:birthday    \""+user.getBirthday()+"\" ;"
 	            + "   OntologyInterest:email    \""+user.getEmail()+"\" ;"
 	            + "   OntologyInterest:facebookId   \""+user.getFacebookId()+"\";" 
 	           // + "   OntologyInterest:id   \""+user.getId()+"\";" 
@@ -67,7 +67,7 @@ public class OntologyService {
 	     	            + " <http://www.owl-ontologies.com/OntologyIU-lite.owl#prioritizes>    OntologyInterest:InterestType_"+user.getFirstName()+"."
 	     	            
 	     	            	 + " <http://www.owl-ontologies.com/OntologyIU-lite.owl#Session_"+user.getFirstName()+"> a OntologyInterest:Session;"
-	     	            	 + " <http://www.owl-ontologies.com/OntologyIU-lite.owl#establish>     OntologyInterest:Context_"+user.getFirstName()+";"
+	     	            	 + " <http://www.owl-ontologies.com/OntologyIU-lite.owl#keeps>     OntologyInterest:Context_"+user.getFirstName()+";"
 	     	            	 + " <http://www.owl-ontologies.com/OntologyIU-lite.owl#started_by>     OntologyInterest:User_"+user.getFirstName()+"."
 	      
 	            + "}   ";
@@ -113,7 +113,7 @@ public class OntologyService {
 		                       
 		            + " <http://www.owl-ontologies.com/OntologyIU-lite.owl#InterestType_"+user.getFirstName()+"> a OntologyInterest:InterestType;"
 		            + " <http://www.owl-ontologies.com/OntologyIU-lite.owl#prioritized_by_a>     OntologyInterest:UserInterestType_"+user.getFirstName()+";"
-		            + "  OntologyInterest:church    \""+interesttype+"\" ."
+		            + "  OntologyInterest:name    \""+interesttype+"\" ."
 		            + "}   ";
 				
 				System.out.println(consultaCrear);
@@ -150,7 +150,7 @@ public class OntologyService {
 		            + "INSERT DATA"	         
 		            + "{" 
 		            +" <http://www.owl-ontologies.com/OntologyIU-lite.owl#Context_"+user.getFirstName()+"> a OntologyInterest:Context;"
-		            + " <http://www.owl-ontologies.com/OntologyIU-lite.owl#established_by>    OntologyInterest:Session_"+user.getFirstName()+";"
+		            + " <http://www.owl-ontologies.com/OntologyIU-lite.owl#kept_by>    OntologyInterest:Session_"+user.getFirstName()+";"
 		            + "  OntologyInterest:latitude        \""+latitude+"\" ;"
 		            + "  OntologyInterest:longitude       \""+longitude+"\" ."
 		            + "}   ";
