@@ -12,6 +12,7 @@ import org.apache.jena.update.UpdateProcessor;
 import ec.edu.epn.guiaquito.dao.InterestTypeDAO;
 import ec.edu.epn.guiaquito.dao.UserDAO;
 import ec.edu.epn.guiaquito.dao.UserInterestTypeDAO;
+import ec.edu.epn.guiaquito.entities.Context;
 import ec.edu.epn.guiaquito.entities.InterestType;
 import ec.edu.epn.guiaquito.entities.User;
 import ec.edu.epn.guiaquito.entities.UserInterestType;
@@ -64,6 +65,11 @@ public class OntologyService {
 	            	    + " <http://www.owl-ontologies.com/OntologyIU-lite.owl#UserInterestType_"+user.getFirstName()+"> a  OntologyInterest:UserInterestType;"
 	     	            + " <http://www.owl-ontologies.com/OntologyIU-lite.owl#belongs_to>     OntologyInterest:User_"+user.getFirstName()+";"
 	     	            + " <http://www.owl-ontologies.com/OntologyIU-lite.owl#prioritizes>    OntologyInterest:InterestType_"+user.getFirstName()+"."
+	     	            
+	     	            	 + " <http://www.owl-ontologies.com/OntologyIU-lite.owl#Session_"+user.getFirstName()+"> a OntologyInterest:Session;"
+	     	            	 + " <http://www.owl-ontologies.com/OntologyIU-lite.owl#establish>     OntologyInterest:Context_"+user.getFirstName()+";"
+	     	            	 + " <http://www.owl-ontologies.com/OntologyIU-lite.owl#started_by>     OntologyInterest:User_"+user.getFirstName()+"."
+	      
 	            + "}   ";
 			
 			System.out.println(consultaCrear);
@@ -85,10 +91,11 @@ public class OntologyService {
 		return userSet;
 	}
 	
-	
+//Interes del Usuario	
 
 		public InterestType updateInterestOntology(String interesttype, User user) throws Exception {
 			InterestType interesttypeSet = new InterestType();
+			
 			//User userSet = new User();
 			try {
 				
@@ -116,19 +123,53 @@ public class OntologyService {
 						UpdateFactory.create(String.format(consultaCrear, id)),
 						"http://138.197.121.73:8080/OntologiaIU-lite/update");
 				upp.execute();
-				
-				
+					
 				//interesttypeSet = interesttype;
 			} catch (Exception e) {
 
 			}
-
 			// TODO Auto-generated method stub
 			return interesttypeSet;
-		
-		
+			
 			}
+		
+		 //Contexto del usuario
+		public Context createContextOntology( User user, double latitude, double longitude) throws Exception {
+			Context contextSet = new Context();
+			try {
+				
+				String consultaCrear =  
+					"PREFIX OntologyInterest: <http://www.owl-ontologies.com/OntologyIU-lite.owl#>\n"
+					+"prefix owl: <http://www.w3.org/2002/07/owl#>\n"
+					+"prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"
+					+"prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"
+					+"prefix swrl: <http://www.w3.org/2003/11/swrl#>\n"
+					+"prefix swrlb: <http://www.w3.org/2003/11/swrlb#>\n"
+					+"prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n"
+					+"prefix xsp: <http://www.owl-ontologies.com/2005/08/07/xsp.owl#>"
+		            + "INSERT DATA"	         
+		            + "{" 
+		            +" <http://www.owl-ontologies.com/OntologyIU-lite.owl#Context_"+user.getFirstName()+"> a OntologyInterest:Context;"
+		            + " <http://www.owl-ontologies.com/OntologyIU-lite.owl#established_by>    OntologyInterest:Session_"+user.getFirstName()+";"
+		            + "  OntologyInterest:latitude        \""+latitude+"\" ;"
+		            + "  OntologyInterest:longitude       \""+longitude+"\" ."
+		            + "}   ";
+				
+				System.out.println(consultaCrear);
+				String id = UUID.randomUUID().toString();
+				System.out.println(String.format("Adding %s", id));
+				UpdateProcessor upp = UpdateExecutionFactory.createRemote(
+						UpdateFactory.create(String.format(consultaCrear, id)),
+						"http://138.197.121.73:8080/OntologiaIU-lite/update");
+				upp.execute();
+			//	contextSet = context;
+			} catch (Exception e) {
 
-	
-	
+			}
+		// TODO Auto-generated method stub
+			System.out.println(contextSet);
+			return contextSet;
+
+			}
+		
 }

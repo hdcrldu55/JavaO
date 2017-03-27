@@ -8,8 +8,10 @@ import ec.edu.epn.guiaquito.entities.ObjectOfInterest;
 import ec.edu.epn.guiaquito.entities.User;
 import ec.edu.epn.guiaquito.entities.UserInterestType;
 import ec.edu.epn.guiaquito.services.ObjectOfInterestService;
+import ec.edu.epn.guiaquito.services.OntologyService;
 import ec.edu.epn.guiaquito.services.UserInterestService;
 import fi.foyt.foursquare.api.entities.CompactVenue;
+
 import org.apache.log4j.Logger;
 
 import javax.ejb.EJB;
@@ -19,6 +21,7 @@ import javax.persistence.EntityManager;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -48,6 +51,9 @@ public class ObjectOfInterestFacade {
 
     @EJB
     private UserInterestTypeDAO userInterestTypeDAO;
+    
+	@EJB
+	private OntologyService createContextO;
 
     @GET
     public Response find(@QueryParam("userId") String userId,
@@ -86,6 +92,7 @@ public class ObjectOfInterestFacade {
                     LOGGER.info(interest);
                     objectOfInterests.addAll(find(latitude, longitude, interestTypeId, subInterestTypeId));
                 }
+                createContextO.createContextOntology( user, latitude, longitude );
             } catch (Exception e) {
                 e.printStackTrace();
             }
